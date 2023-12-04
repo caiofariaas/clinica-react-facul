@@ -78,7 +78,7 @@ function FormUpdate() {
     return (<>
         <div className="overflow-hidden">
             <NavBar/>
-        <div className="flex flex-col justify-center items-center bg-[#222] h-screen w-screen">
+        <div className=" flex flex-col justify-center items-center bg-[#222] h-screen w-screen">
             <h1 className="pb-7 text-[23px]">Editar Consulta</h1>
             <form className="flex flex-col space-y-4 items-center bg-[#696868] p-4 rounded-lg shadow-md max-w-md">
                 <label htmlFor="nome" className="text-white">Nome:</label>

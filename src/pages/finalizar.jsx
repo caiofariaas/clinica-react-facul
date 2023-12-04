@@ -1,4 +1,3 @@
-import Card from "@/components/card";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
