@@ -7,26 +7,50 @@ import Footer from '@/components/footer';
 function FormUpdate() {
 
     const router = useRouter()
-
-    const [id, setId] = useState('');
-    const [nome, setNome] = useState('');
-    const [cpf, setCPF] = useState('');
-    const [motivo, setMotivoConsulta] = useState('');
-    const [data, setData] = useState('');
-
     const { params } = router.query;
+    const [id, setId] = useState("")
+    const [nome, setnome] = useState("")
+    const [cpf, setcpf] = useState("")
+    const [data, setdata] = useState("")
+    const [hora, sethora] = useState("")
+    const [motivo, setmotivo] = useState("")
+  
+    const handleNomeChange = (event) => {
+      setnome(event.target.value);
+    };
+  
+    const handleCpfChange = (event) => {
+      setcpf(event.target.value);
+    };
+  
+    const handleDataChange = (event) => {
+      setdata(event.target.value);
+    };
+  
+    const handleHoraChange = (event) => {
+      sethora(event.target.value);
+    };
+  
+    const handleMotivoChange = (event) => {
+      setmotivo(event.target.value);
+    };
+
+    
     const [parametros, setParametros] = useState(null);
 
     useEffect(() => {
         if (params) {
-            try {
+            console.log(decodeURIComponent(params));
+            try {   
                 const parametrosObj = JSON.parse(decodeURIComponent(params));
+                console.log(parametrosObj);
                 setParametros(parametrosObj);
+                setnome(parametrosObj.nome)
                 setId(parametrosObj.id)
-                setNome(parametrosObj.nome)
-                setCPF(parametrosObj.cpf)
-                setMotivoConsulta(parametrosObj.motivo)
-                setData(parametrosObj.data)
+                setcpf(parametrosObj.cpf)
+                setmotivo(parametrosObj.motivo)
+                setdata(parametrosObj.data)
+                sethora(parametrosObj.hora)
 
             } catch (error) {
                 console.error("Erro ao converter os parâmetros:", error);
@@ -35,39 +59,25 @@ function FormUpdate() {
     }, [params]);
 
 
-    const handleNomeChange = (event) => {
-        setNome(event.target.value);
-    };
-
-    const handleCPFChange = (event) => {
-        setCPF(event.target.value);
-    };
-
-    const handleDateChange = (event) => {
-        setData(event.target.value);
-    };
-
-    const handleMotivoChange = (event) => {
-        setMotivoConsulta(event.target.files[0]);
-    };
-
 
 // Arrumar no BackEnd
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData();
-        formData.append('nomeProd', nome);
-        formData.append('descProd', descricao);
-        formData.append('precoProd', preco);
+        formData.append('paciente', nome);
+        formData.append('cpf',cpf)
+        formData.append('data', data);
+        formData.append('hora', hora);
+        formData.append('motivo', motivo);
        
 
         try {
-            const response = await axios.patch(`http://127.0.0.1:8000/tenis/${id}/`, formData, {
+            const response = await axios.patch(`http://192.168.0.13:8000/agendamento/${id}/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-            }).then(() => { router.push('/') });
+            }).then(() => { router.push('/consultas') });
 
 
         } catch (error) {
@@ -85,14 +95,14 @@ function FormUpdate() {
                 <input type="text" id="nome" placeholder="Nome" value={nome} onChange={handleNomeChange} className="input input-bordered w-full max-w-xs mb-4" />
 
                 <label htmlFor="preco" className="text-white">CPF:</label>
-                <input type="text" id="preco" placeholder="Preço" value={cpf} onChange={handleCPFChange} className="input input-bordered w-full max-w-xs mb-4" />
+                <input type="text" id="preco" placeholder="000.000.000-00" value={cpf} onChange={handleCpfChange} className="input input-bordered w-full max-w-xs mb-4" />
 
                 <label htmlFor="descricao" className="text-white">Data da Consulta:</label>
-                <input type="text" id="data" placeholder="Preço" value={data} onChange={handleDateChange} className="input input-bordered w-full max-w-xs mb-4" />
+                <input type="text" id="data" placeholder="Data" value={data} onChange={handleDataChange} className="input input-bordered w-full max-w-xs mb-4" />
 
 
                 <label htmlFor="descricao" className="text-white">Motivo da Consulta:</label>
-                <input type="text" id="data" placeholder="Preço" value={motivo} onChange={handleMotivoChange} className="input input-bordered w-full max-w-xs mb-4" />
+                <input type="text" id="data" placeholder="Motivo" value={motivo} onChange={handleMotivoChange} className="input input-bordered w-full max-w-xs mb-4" />
 
                 <button onClick={handleSubmit} className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">Editar</button>
             </form>
