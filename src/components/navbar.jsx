@@ -13,7 +13,7 @@ function NavBar() {
                 <div className="navbar-start mx-6">
                     <Image src="" className="w-14" />
                     <div className=" hidden md:flex ml-3 text-white">
-                        Clinica Careca
+                       Dentart Odontologia
                     </div>
                 </div>
                 <div className="navbar-end">
@@ -32,7 +32,6 @@ function NavBar() {
                                 <label htmlFor="my-drawer" className="drawer-overlay"></label>
                                 <ul className="menu p-4 w-80 min-h-full  bg-base-200 text-base-content">
                                     <li onClick={()=>{router.push('/')}}><a>Agendar uma consulta</a></li>
-                                    <li onClick={()=>{router.push('editar')}}><a>Editar uma consulta</a></li>
                                     <li onClick={()=>{router.push('consultas')}}><a>Consultas</a></li>
                                 </ul>
                             </div>
